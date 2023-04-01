@@ -3,9 +3,14 @@ import { useState } from "react";
 const App = () => {
   const [persons, setPersons] = useState([{ name: "Arto Hellas" }, "Nimoak"]);
   const [newName, setNewName] = useState("");
+  const [newNumber, setNewNumber] = useState("");
 
-  const handleChange = (event) => {
+  const handleNameChange = (event) => {
     setNewName(event.target.value);
+  };
+
+  const handleNumberChange = (event) => {
+    setNewNumber(event.target.value);
   };
 
   const addPerson = (event) => {
@@ -17,6 +22,7 @@ const App = () => {
 
     const personResource = {
       name: newName,
+      number: newNumber,
     };
 
     if (allNames.includes(newName)) {
@@ -35,9 +41,20 @@ const App = () => {
           <label htmlFor="name">name:</label>{" "}
           <input
             placeholder="Add person"
-            onChange={handleChange}
+            onChange={handleNameChange}
             id="name"
             value={newName}
+          />
+        </div>
+
+        <div>
+        <label htmlFor="number">Number</label>
+          <input
+            placeholder="Add number"
+            onChange={handleNumberChange}
+            id="number"
+            type="tel"
+            value={newNumber}
           />
         </div>
         <div>
@@ -46,7 +63,7 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       {persons.map((person) => (
-        <p key={Math.random()}>{person.name}</p>
+        <p key={Math.random()}>{person.name} {person.number}</p>
       ))}
     </div>
   );
