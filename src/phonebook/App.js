@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const App = () => {
-  const [persons, setPersons] = useState([{ name: "Arto Hellas" }]);
+  const [persons, setPersons] = useState([{ name: "Arto Hellas" }, "Nimoak"]);
   const [newName, setNewName] = useState("");
 
   const handleChange = (event) => {
@@ -10,11 +10,21 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault();
+
+    const allNames = persons.map((person) => {
+      return person.name;
+    });
+
     const personResource = {
       name: newName,
     };
-    setPersons(persons.concat(personResource));
-    setNewName("")
+
+    if (allNames.includes(newName)) {
+      alert(`${newName} is already added to the phone book`);
+    } else {
+      setPersons(persons.concat(personResource));
+      setNewName("");
+    }
   };
 
   return (
@@ -23,14 +33,21 @@ const App = () => {
       <form onSubmit={addPerson}>
         <div>
           <label htmlFor="name">name:</label>{" "}
-          <input placeholder="Add person" onChange={handleChange} id="name" value={newName} />
+          <input
+            placeholder="Add person"
+            onChange={handleChange}
+            id="name"
+            value={newName}
+          />
         </div>
         <div>
           <button type="submit">add</button>
         </div>
       </form>
       <h2>Numbers</h2>
-      {persons.map(person=><p>{person.name}</p>)}
+      {persons.map((person) => (
+        <p key={Math.random()}>{person.name}</p>
+      ))}
     </div>
   );
 };
