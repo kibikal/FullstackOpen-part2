@@ -8,10 +8,10 @@ const App = () => {
   const [newNumber, setNewNumber] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:3001/persons").then(res=>{
-      setPersons(res.data)
+    axios.get("http://localhost:3001/persons").then((res) => {
+      setPersons(res.data);
     });
-  },[]);
+  }, []);
   const addPerson = (event) => {
     event.preventDefault();
 
@@ -26,9 +26,13 @@ const App = () => {
     if (allNames.includes(newName)) {
       alert(`${newName} is already added to the phone book`);
     } else {
-      setPersons(persons.concat(personResource));
-      setNewName("");
-      setNewNumber("");
+      axios
+        .post("http://localhost:3001/persons", personResource)
+        .then((res) => {
+          setPersons(persons.concat(res.data));
+          setNewName("");
+          setNewNumber("");
+        });
     }
   };
 
