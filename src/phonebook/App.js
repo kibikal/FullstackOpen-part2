@@ -1,25 +1,16 @@
 import { useState } from "react";
-
+import { AddForm } from "./components/AddForm";
+import { Person } from "./components/Person";
 const App = () => {
-  const [persons, setPersons] = useState([{ name: "Arto Hellas" }, "Nimoak"]);
+  const [persons, setPersons] = useState([{ name: "Arto Hellas" }]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
-
-  const handleNameChange = (event) => {
-    setNewName(event.target.value);
-  };
-
-  const handleNumberChange = (event) => {
-    setNewNumber(event.target.value);
-  };
-
   const addPerson = (event) => {
     event.preventDefault();
 
     const allNames = persons.map((person) => {
       return person.name;
     });
-
     const personResource = {
       name: newName,
       number: newNumber,
@@ -30,41 +21,23 @@ const App = () => {
     } else {
       setPersons(persons.concat(personResource));
       setNewName("");
+      setNewNumber("");
     }
   };
 
   return (
     <div>
-      <h2>Phonebook</h2>
-      <form onSubmit={addPerson}>
-        <div>
-          <label htmlFor="name">name:</label>{" "}
-          <input
-            placeholder="Add person"
-            onChange={handleNameChange}
-            id="name"
-            value={newName}
-          />
-        </div>
+      <h1>Phonebook</h1>
 
-        <div>
-        <label htmlFor="number">Number</label>
-          <input
-            placeholder="Add number"
-            onChange={handleNumberChange}
-            id="number"
-            type="tel"
-            value={newNumber}
-          />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <AddForm
+        addPerson={addPerson}
+        newName={newName}
+        newNumber={newNumber}
+        setNewName={setNewName}
+        setNewNumber={setNewNumber}
+      />
       <h2>Numbers</h2>
-      {persons.map((person) => (
-        <p key={Math.random()}>{person.name} {person.number}</p>
-      ))}
+      <Person persons={persons} />
     </div>
   );
 };
