@@ -14,7 +14,6 @@ const App = () => {
   }, []);
   const addPerson = (event) => {
     event.preventDefault();
-
     const allNames = persons.map((person) => {
       return person.name;
     });
@@ -34,6 +33,10 @@ const App = () => {
     }
   };
 
+const deletePerson=()=>{
+
+}
+
   return (
     <div>
       <h1>Phonebook</h1>
@@ -46,7 +49,7 @@ const App = () => {
         setNewNumber={setNewNumber}
       />
       <h2>Numbers</h2>
-      <Person persons={persons} />
+      <Person onClick={deletePerson} persons={persons} />
     </div>
   );
 };
